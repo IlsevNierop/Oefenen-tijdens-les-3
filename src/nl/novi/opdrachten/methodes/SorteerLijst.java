@@ -27,6 +27,51 @@ public class SorteerLijst {
         List<Integer> wrongList = new ArrayList<>(Arrays.asList(1, 2, 4, 5, 6, 7, 8));
         List<Integer> correctList = new ArrayList<>(Arrays.asList(88, 888, 909909));
 
+        checkList(wrongList);
+
     }
+
+    public static void checkList(List<Integer> list) {
+        if (list.size() > 3) {
+            System.out.println("Deze lijst heeft te veel getallen");
+        } else if (list.size() < 3) {
+            System.out.println("Deze lijst heeft te weinig getallen");
+        } else {
+            // nog oplossen van hoog naar laag
+            for (int i = 0; i < list.size(); i++){
+
+
+
+
+            }
+
+
+            int index = -1;
+            for (int i = 0; i < list.size(); i++) {
+                index = i;
+                for (int j = i; j < list.size() - 1; j++) {
+                    if (list.get(j) < list.get(i)) {
+                        index = j;
+                    }
+                }
+                int temp = list.get(i);
+                list.get(i) = list.get(index);
+                list.get(index) = temp;
+            }
+        }
+
+//        for (int i = 0; i <array.length; i++){
+//            index = i;
+//            for (int j = i ; j <= array.length-1; j++){
+//                if (array[j] < array[index]){
+//                    index = j;
+//                }
+//            }
+//            int temp = array[i];
+//            array[i] = array[index];
+//            array[index] = temp;
+//        }
+    }
+}
 
 }
