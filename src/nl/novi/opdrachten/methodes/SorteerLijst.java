@@ -26,38 +26,43 @@ public class SorteerLijst {
 
         List<Integer> wrongList = new ArrayList<>(Arrays.asList(1, 2, 4, 5, 6, 7, 8));
         List<Integer> correctList = new ArrayList<>(Arrays.asList(88, 888, 909909));
+        List<Integer> betterList = new ArrayList<>(Arrays.asList(100, 5, 75));
+
 
         checkList(wrongList);
 
+        System.out.println("original list");
+        System.out.println(correctList);
+        checkList(correctList);
+        System.out.println("The numbers have not been changed, because they were already in the right order:");
+        System.out.println(correctList);
+
+        System.out.println("The original list");
+        System.out.println(betterList);
+        checkList(betterList);
+        System.out.println("The numbers have now been sorted from low to high");
+        System.out.println(betterList);
+
     }
 
-    public static void checkList(List<Integer> list) {
-        if (list.size() > 3) {
-            System.out.println("Deze lijst heeft te veel getallen");
-        } else if (list.size() < 3) {
-            System.out.println("Deze lijst heeft te weinig getallen");
+    public static void checkList(List<Integer> integerList) {
+        if (integerList.size() > 3) {
+            System.out.println("Deze lijst: " + integerList + " heeft te veel getallen");
+        } else if (integerList.size() < 3) {
+            System.out.println("Deze lijst: " + integerList + " heeft te weinig getallen");
         } else {
-            // nog oplossen van hoog naar laag
-            for (int i = 0; i < list.size(); i++){
+            // nog oplossen van laag naar hoog
+            for (int i = 0; i < (integerList.size()-1); i++) {
 
+                int minIndTemp = Math.min(integerList.get(i), integerList.get(i+1));
+                int maxIndTemp = Math.max(integerList.get(i), integerList.get(i+1));
 
+                integerList.set(i, minIndTemp);
+                integerList.set(i+1, maxIndTemp);
 
 
             }
 
-
-            int index = -1;
-            for (int i = 0; i < list.size(); i++) {
-                index = i;
-                for (int j = i; j < list.size() - 1; j++) {
-                    if (list.get(j) < list.get(i)) {
-                        index = j;
-                    }
-                }
-                int temp = list.get(i);
-                list.get(i) = list.get(index);
-                list.get(index) = temp;
-            }
         }
 
 //        for (int i = 0; i <array.length; i++){
@@ -74,4 +79,4 @@ public class SorteerLijst {
     }
 }
 
-}
+
