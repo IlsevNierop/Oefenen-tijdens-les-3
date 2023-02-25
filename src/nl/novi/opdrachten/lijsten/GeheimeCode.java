@@ -3,6 +3,7 @@ package nl.novi.opdrachten.lijsten;
 import java.awt.*;
 import java.util.*;
 import java.util.List;
+import java.util.HashMap;
 
 public class GeheimeCode {
 
@@ -20,7 +21,11 @@ public class GeheimeCode {
 
         System.out.println(laResistanceMembers);
 
-        encryptList(laResistanceMembers);
+        HashMap<Character, String> charMap = new HashMap<>(); //create HashMap of alphabet
+
+        List encryptedList = encryptList(laResistanceMembers, charMap);
+
+        encryptEncryptedList(encryptedList, charMap);
     }
 
         /*
@@ -38,10 +43,8 @@ public class GeheimeCode {
         b) Als de positie in de lijst een even getal is, dan moet de cijfercombinatie omgedraaid worden.
          */
 
-    public static void encryptList(List<String> members) {
+    public static List<String> encryptList(List<String> members, HashMap<Character, String> charMap) {
 
-
-        HashMap<Character, String> charMap = new HashMap<>(); //create HashMap of alphabet
 
         charMap.put('a', "1");
         charMap.put('b', "2");
@@ -98,7 +101,7 @@ public class GeheimeCode {
 
         ArrayList<String> encryptMembers = new ArrayList<>();
         for (int i = 0; i < members.size(); i++) {//iterate through each String in ArrayList
-            if ((i+1) % 2 != 0) {
+            if ((i + 1) % 2 != 0) {
                 String name = members.get(i);
                 String encrName = null;
                 for (int j = 0; j < name.length(); j++) {//Iterate through each Character in Strings (in ArrayList)
@@ -113,13 +116,12 @@ public class GeheimeCode {
 
                 }
                 encryptMembers.add(encrName);
-            }
-            else { //make it flip the order for even positions
+            } else { //make it flip the order for even positions
                 String name = members.get(i);
                 String encrName = null;
-                for (int j = (name.length()-1); j >= 0 ; j--) {//Iterate through each Character in Strings (in ArrayList)
+                for (int j = (name.length() - 1); j >= 0; j--) {//Iterate through each Character in Strings (in ArrayList)
                     String encrNum = charMap.get(name.charAt(j));
-                    if (j == name.length()-1) {
+                    if (j == name.length() - 1) {
                         encrName = encrNum + "-";
                     } else if ((j) == 0) {
                         encrName = encrName + encrNum;
@@ -134,13 +136,47 @@ public class GeheimeCode {
 
         }
         System.out.println(encryptMembers);
+        return encryptMembers;
 
     }
 
-        /*
-        Opdracht 3:
-        Schrijf een methode die de versleutelde lijst kan omzetten naar de ontsleutelde lijst.
-         */
+    /*
+    Opdracht 3:
+    Schrijf een methode die de versleutelde lijst kan omzetten naar de ontsleutelde lijst.
+     */
+    public static void encryptEncryptedList(List<String> encryptedMembers, HashMap<Character, String> charMap) {
+        ArrayList<String> encryptedEncryptedListMembers = new ArrayList<>();
+        for (int i = 0; i < encryptedMembers.size(); i++) {//iterate through each String in ArrayList
+            String[] encrName = encryptedMembers.get(i).split("-"); //create array with the numbers in String per name
+            String encrEncrName = "";
+            if ((i + 1) % 2 != 0) {
+                for (int j = 0; j < encrName.length; j++) {
+                    String name = encrName[j];
+                    for (Map.Entry<Character, String> entry : charMap.entrySet())
+                        if (name.equals(entry.getValue())) {
+                            encrEncrName = encrEncrName + entry.getKey();
+                        }
+                }
+                encryptedEncryptedListMembers.add(encrEncrName);
+            } else {
+                for (int j = encrName.length - 1; j >= 0; j--) {
+                    String name = encrName[j];
+                    for (Map.Entry<Character, String> entry : charMap.entrySet())
+                        if (name.equals(entry.getValue())) {
+                            encrEncrName = encrEncrName + entry.getKey();
+                        }
+                }
+                encryptedEncryptedListMembers.add(encrEncrName);
+
+            }
+            System.out.println(encrEncrName);
+
+
+        }
+        System.out.println(encryptedEncryptedListMembers);
+
+    }
+
 
     private static List<String> addMembers(List<String> members, String name) {
         if (members.contains(name)) {
